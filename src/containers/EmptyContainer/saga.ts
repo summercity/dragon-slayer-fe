@@ -3,9 +3,8 @@
  */
 
 import { call, put, select, takeLatest } from "redux-saga/effects";
-import socketIOClient from "socket.io-client";
 // import { reposLoaded, repoLoadingError } from 'containers/App/actions';
-import ActionTypes from "../HomePage/constants";
+import ActionTypes from "../EmptyContainer/constants";
 
 // import request from 'utils/request';
 // import { makeSelectHomePageContainer } from '../HomePage/selectors';
@@ -22,6 +21,7 @@ export function* updateFullname() {
     // Call our request helper (see 'utils/request')
     // const repos = yield call(request, requestURL);
     // yield put(reposLoaded(repos, username));
+    console.log("You have reach the saga!!!! yahoo!!!");
   } catch (err) {
     // yield put(repoLoadingError(err));
   }

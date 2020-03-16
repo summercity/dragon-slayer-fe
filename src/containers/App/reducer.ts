@@ -5,9 +5,36 @@ import ActionTypes from "./constants";
 export const initialState: ContainerState = {
   loading: false,
   error: false,
-  currentUser: "",
-  userData: {
-    repos: []
+  user: {
+    id: "",
+    name: "",
+    email: "",
+    computer_number: "",
+    password: "",
+    password_confirmation: "",
+    active: false,
+    online: 0,
+    status_description: ""
+  },
+  notifications: {
+    saving: {
+      open: true,
+      variant: "success",
+      message: "Saving process completed successfully.",
+      duration: 3000
+    },
+    offline: {
+      open: true,
+      variant: "warning",
+      message: "Unable to connect. Please check your network connection.",
+      duration: 1000 * 10
+    },
+    invalidUser: {
+      open: true,
+      variant: "error",
+      message: "You have entered your password or email incorrectly",
+      duration: 1000 * 10
+    }
   }
 };
 
@@ -17,31 +44,14 @@ function appReducer(
   action: ContainerActions
 ): ContainerState {
   switch (action.type) {
-    case ActionTypes.LOAD_REPOS:
-      return {
-        currentUser: state.currentUser,
-        loading: true,
-        error: false,
-        userData: {
-          repos: []
-        }
-      };
-    case ActionTypes.LOAD_REPOS_SUCCESS:
-      return {
-        currentUser: action.payload.username,
-        loading: false,
-        error: state.error,
-        userData: {
-          repos: action.payload.repos
-        }
-      };
-    case ActionTypes.LOAD_REPOS_ERROR:
-      const { error, loading, ...rest } = state;
-      return {
-        error: action.payload,
-        loading: false,
-        ...rest
-      };
+    case ActionTypes.SET_LOADING_APP:
+      return Object.assign({}, state, {
+        loading: action.payload
+      });
+    case ActionTypes.SET_USER_APP:
+      return Object.assign({}, state, {
+        user: action.payload
+      });
     default:
       return state;
   }

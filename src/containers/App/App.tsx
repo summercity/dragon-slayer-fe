@@ -1,9 +1,15 @@
 import React from "react";
 import { Helmet } from "react-helmet";
-import styled from "../../styles/styled-components";
+// import styled from "../../styles/styled-components";
 import { Switch, Route } from "react-router-dom";
 
+import { ProtectedRoute } from "../../components/ProtectedComponent/protected.route";
+import Login from "../Login/Loadable";
 import HomePage from "../HomePage";
+import UserForm from "../Users/Loadable";
+import AppBar from "../AppBar";
+import Notifications from "../Notifications";
+
 // import FeaturePage from 'containers/FeaturePage/Loadable';
 // import NotFoundPage from 'containers/NotFoundPage/Loadable';
 // import Header from 'components/Header';
@@ -12,18 +18,13 @@ import HomePage from "../HomePage";
 import logo from "./logo.svg";
 import "./App.css";
 
-const AppWrapper = styled.div`
-  max-width: calc(768px + 16px * 2);
-  margin: 0 auto;
-  display: flex;
-  min-height: 100%;
-  padding: 0 16px;
-  flex-direction: column;
-`;
+// const AppWrapper = styled.div`
+//   font-family: arial;
+// `;
 
 export default function App() {
   return (
-    <AppWrapper>
+    <React.Fragment>
       <Helmet
         titleTemplate="%s - React.js Boilerplate"
         defaultTitle="React.js Boilerplate"
@@ -33,14 +34,18 @@ export default function App() {
           content="React.js typescript Boilerplate application by Jan Dave Arce"
         />
       </Helmet>
-      {/* <Header /> */}
+      <Notifications />
+      <AppBar />
       <Switch>
-        <Route exact path="/" component={HomePage} />
+        <Route exact path="/login" component={Login} />
+        <ProtectedRoute exact path="/" component={HomePage} />
+        <Route exact path="/users/form" component={UserForm} />
+        <Route exact path="/users/form/:id" component={UserForm} />
         {/* <Route path="/features" component={FeaturePage} />
         <Route path="" component={NotFoundPage} /> */}
       </Switch>
       {/* <Footer /> */}
       {/* <GlobalStyle /> */}
-    </AppWrapper>
+    </React.Fragment>
   );
 }

@@ -1,9 +1,14 @@
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
 import { Helmet } from "react-helmet";
-import { useDispatch, useSelector, connect } from "react-redux";
+import { connect } from "react-redux";
+import socketIOClient from "socket.io-client";
 import { createStructuredSelector } from "reselect";
+import Paper from "@material-ui/core/Paper";
 import { compose, Dispatch } from "redux";
+import { makeStyles } from "@material-ui/core/styles";
 
+import Queue from "../Queue/Loadable";
+import StatusLegend from "../../components/StatusLegend";
 import saga from "./saga";
 import { changeFullname } from "./actions";
 import makeSelectHomePageContainer from "./selectors";
@@ -23,47 +28,33 @@ interface DesiredSelection {}
 interface Props extends ContainerActions {
   home: ContainerState;
 }
-// const stateSelector = createStructuredSelector({
-//   loading: makeSelectLoading()
-// });
+
+const useStyles = makeStyles(theme => ({
+  paper: {
+    margin: 20,
+    padding: 20
+  }
+}));
 
 const HomePage: React.FC<Props> = props => {
-  // function HomePage(props: Props) {
-  // const { fullname } = useSelector(stateSelector);
-  // const dispatch = useDispatch();
+  const classes = useStyles();
 
-  // useInjectReducer({ key: "home", reducer: reducer }); // Initial State not working
-  useInjectSaga({ key: "home", saga: saga });
-
-  const handleClickUpdateSteAction = () => {
-    // console.log("click!", home.fullname);
-    // dispatch(changeFullname("Awesome Jan Dave!!!"));
-    props.changeFullname("Awesome Jan Dave Arce");
-  };
+  useEffect(() => {
+    console.log(
+      "%c STOP! Report To: Jan Dave Arce",
+      "font-weight: bold; font-size: 50px;color: red; text-shadow: 3px 3px 0 rgb(217,31,38) , 6px 6px 0 rgb(226,91,14) , 9px 9px 0 rgb(245,221,8) , 12px 12px 0 rgb(5,148,68) , 15px 15px 0 rgb(2,135,206) , 18px 18px 0 rgb(4,77,145) , 21px 21px 0 rgb(42,21,113)"
+    );
+  }, []);
 
   return (
     <div className="HomePage">
-      <Helmet
-        titleTemplate="%s - React.js Boilerplate"
-        defaultTitle="React.js Boilerplate by Jan Dave Arce"
-      >
-        <meta name="description" content="A React.js Boilerplate Application" />
+      <Helmet titleTemplate="Q-APP" defaultTitle="Q-APP">
+        <meta name="description" content="Q-APP" />
       </Helmet>
-      <header className="HomePage-header">
-        <img src={logo} className="HomePage-logo" alt="logo" />
-        <p>{props.home.fullname}</p>
-        <a
-          className="HomePage-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-      <div>
-        <button onClick={handleClickUpdateSteAction}>Update State</button>
-      </div>
+      <StatusLegend />
+      <Paper className={classes.paper}>
+        <Queue />
+      </Paper>
     </div>
   );
 };

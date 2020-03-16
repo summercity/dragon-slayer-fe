@@ -13,8 +13,11 @@ const selectRoute = (state: ApplicationRootState) => {
   return state.router;
 };
 
+const selectNotif = () =>
+  createSelector(selectGlobal, subState => subState.notifications);
+
 const makeSelectCurrentUser = () =>
-  createSelector(selectGlobal, globalState => globalState.currentUser);
+  createSelector(selectGlobal, globalState => globalState.user);
 
 const makeSelectLoading = () =>
   createSelector(selectGlobal, globalState => globalState.loading);
@@ -30,6 +33,7 @@ const makeSelectLocation = () =>
 
 export {
   selectGlobal,
+  selectNotif,
   makeSelectCurrentUser,
   makeSelectLoading,
   makeSelectError,
