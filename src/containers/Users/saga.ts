@@ -12,7 +12,7 @@ import { setNotifConfigAction } from "../Notifications/actions";
 import { selectNotif } from "../../containers/App/selectors";
 import ActionTypes from "../Users/constants";
 import request from "../../utils/request";
-import { setItem, getItem } from "../../utils/localStorage";
+import { getItem } from "../../utils/localStorage";
 
 import {
   REACT_APP_API_BASE_URL,
@@ -77,7 +77,6 @@ export function* get(args: any) {
 
 export function* getAll(args: any) {
   yield put(setLoadingAppAction(true));
-  const { payload } = args;
   const { offline } = yield select(selectNotif());
   try {
     const json = getItem(ACCESS_TOKEN_KEY);

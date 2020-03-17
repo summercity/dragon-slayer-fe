@@ -93,7 +93,7 @@ const Login: React.FC<Props> = props => {
     if (access && access.authenticated) {
       props.history.push("/");
     }
-  }, []);
+  }, [props.history]);
 
   const handleChange = (prop: string) => (event: any) => {
     setValues({ ...values, [prop]: event.target.value });

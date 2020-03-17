@@ -99,7 +99,7 @@ const useStyles = makeStyles(theme => ({
 
 const Queue: React.FC<Props> = props => {
   useInjectSaga({ key: "queue", saga: saga });
-  const { queUsers, updateUser, user, history } = props;
+  const { queUsers, updateUser, getAllUsers, user, history } = props;
   const classes = useStyles();
   const [dense, setDense] = React.useState(false);
   const [secondary, setSecondary] = React.useState(true);
@@ -109,10 +109,12 @@ const Queue: React.FC<Props> = props => {
   let watchedLocalUser = queUsers.find(x => x.id === localUser.user.id);
 
   useEffect(() => {
-    user.status_description === "Logged Out" && updateStatus("Available");
+    getAllUsers();
+  }, [getAllUsers]);
 
-    props.getAllUsers();
-  }, []);
+  useEffect(() => {
+    user.status_description === "Logged Out" && updateStatus("Available");
+  }, [user.status_description]); // eslint-disable-line
 
   useEffect(() => {
     // connect to the socket
@@ -124,10 +126,10 @@ const Queue: React.FC<Props> = props => {
     socket.on("outgoing data", (data: any) => {
       const { onQappUsers } = data.changes;
       if (onQappUsers === "status") {
-        props.getAllUsers();
+        getAllUsers();
       }
     });
-  }, []);
+  }, [getAllUsers]);
 
   const updateStatus = (status: string) => {
     user.id = localUser.user.id;
@@ -216,9 +218,7 @@ const Queue: React.FC<Props> = props => {
                   />
                   <ListItemText
                     secondary={
-                      secondary
-                        ? `Computer Number: ${item.computer_number}`
-                        : null
+                      secondary ? `Computer #: ${item.computer_number}` : null
                     }
                   />
                   <ListItemSecondaryAction>

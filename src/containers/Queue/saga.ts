@@ -6,7 +6,7 @@ import { all, fork, call, put, select, takeLatest } from "redux-saga/effects";
 import socketIOClient from "socket.io-client";
 import { setQueUsersAction } from "./actions";
 import ActionTypes from "./constants";
-import { setLoadingAppAction, setUserApp } from "../App/action";
+import { setLoadingAppAction } from "../App/action";
 import { setNotifConfigAction } from "../Notifications/actions";
 
 import { selectNotif } from "../App/selectors";
@@ -50,9 +50,9 @@ export function* update(args: any) {
 
   try {
     const json = getItem(ACCESS_TOKEN_KEY);
-    const { token, user: urrentUser } = json !== null ? JSON.parse(json) : "";
+    const { token } = json !== null ? JSON.parse(json) : "";
 
-    const user = yield call(
+    yield call(
       request,
       `${REACT_APP_API_BASE_URL}/api/users/status/${payload.id}`,
       {

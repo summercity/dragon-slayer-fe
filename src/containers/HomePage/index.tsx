@@ -1,7 +1,6 @@
 import React, { memo, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { connect } from "react-redux";
-import socketIOClient from "socket.io-client";
 import { createStructuredSelector } from "reselect";
 import Paper from "@material-ui/core/Paper";
 import { compose, Dispatch } from "redux";
@@ -9,18 +8,16 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import Queue from "../Queue/Loadable";
 import StatusLegend from "../../components/StatusLegend";
-import saga from "./saga";
 import { changeFullname } from "./actions";
 import makeSelectHomePageContainer from "./selectors";
 
-import { useInjectSaga } from "../../utils/injectSaga";
+// import { useInjectSaga } from "../../utils/injectSaga";
 import {
   ContainerState,
   ContainerActions,
   ContainerActionsAndTypes
 } from "./types";
 import { ApplicationRootState } from "../../types";
-import logo from "./logo.svg";
 import "./HomePage.css";
 
 interface DesiredSelection {}

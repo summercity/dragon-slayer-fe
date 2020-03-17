@@ -25,7 +25,7 @@ import { selectSingleUser } from "./selectors";
 
 import { useInjectSaga } from "../../utils/injectSaga";
 import {
-  ContainerState,
+  // ContainerState,
   ContainerActions,
   ContainerActionsAndTypes,
   UserInterface,
@@ -63,8 +63,8 @@ const useStyles = makeStyles(theme => ({
 const UserForm: React.FC<Props> = props => {
   useInjectSaga({ key: "users", saga: saga });
   const classes = useStyles();
-  const { user, addUser, updateUser } = props;
-  const userId = props.match.params.id;
+  const { user, addUser, updateUser, getUser, match } = props;
+  const userId = match.params.id;
 
   const [state, setState] = React.useState(user);
 
@@ -76,7 +76,7 @@ const UserForm: React.FC<Props> = props => {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     if (name === "active") {
-      setState({ ...state, ["active"]: event.target.checked });
+      setState({ ...state, ["active"]: event.target.checked }); // eslint-disable-line
     } else {
       setState({ ...state, [name]: event.target.value });
     }
@@ -98,20 +98,19 @@ const UserForm: React.FC<Props> = props => {
   const hasError = (inputName: string) => !!(errors && errors[inputName]);
 
   useEffect(() => {
-    console.log("API CALL");
-    userId && props.getUser(userId);
-  }, [userId]);
+    userId && getUser(userId);
+  }, [userId, getUser]);
 
   const back = () => {
     props.history.push("/");
   };
 
-  const handleClickNewForm = () => {
-    props.history.push("/users/form");
-  };
+  // const handleClickNewForm = () => {
+  //   props.history.push("/users/form");
+  // };
 
   //# Check optimization #
-  useEffect(() => console.log("rendered!"));
+  // useEffect(() => console.log("rendered!"));
 
   return (
     <div>

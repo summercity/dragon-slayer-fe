@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Online from "@material-ui/icons/RecordVoiceOver";
 import Offline from "@material-ui/icons/VoiceOverOff";
@@ -38,4 +38,4 @@ const Status: React.FC<Props> = props => {
   );
 };
 
-export default Status;
+export default memo(Status);

@@ -1,8 +1,8 @@
 import ActionTypes from "./constants";
 import {
   ContainerState,
-  ContainerActionsAndTypes,
-  UserInterface
+  ContainerActionsAndTypes
+  // UserInterface
 } from "./types";
 
 // The initial state of the App

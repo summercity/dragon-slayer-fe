@@ -1,11 +1,6 @@
-import React from "react";
+import React, { memo } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Avatar from "@material-ui/core/Avatar";
-import { deepOrange, deepPurple } from "@material-ui/core/colors";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
 import Paper from "@material-ui/core/Paper";
-import Button from "@material-ui/core/Button";
 import Online from "@material-ui/icons/RecordVoiceOver";
 import Offline from "@material-ui/icons/VoiceOverOff";
 import Notified from "@material-ui/icons/NotificationsActive";
@@ -62,4 +57,4 @@ const StatusLegend: React.FC = () => {
   );
 };
 
-export default StatusLegend;
+export default memo(StatusLegend);

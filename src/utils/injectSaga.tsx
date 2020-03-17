@@ -63,7 +63,7 @@ const useInjectSaga = ({ key, saga, mode }: InjectSagaParams) => {
     return () => {
       injectors.ejectSaga(key);
     };
-  }, []);
+  }, []); // eslint-disable-line
 };
 
 export { useInjectSaga };

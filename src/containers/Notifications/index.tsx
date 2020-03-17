@@ -1,21 +1,17 @@
 import React, { memo } from "react";
-import { Helmet } from "react-helmet";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { compose, Dispatch } from "redux";
 
-import Button from "@material-ui/core/Button";
 import Snackbar from "@material-ui/core/Snackbar";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
 import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
-import { makeStyles, Theme } from "@material-ui/core/styles";
+// import { makeStyles, Theme } from "@material-ui/core/styles";
 
-import saga from "./saga";
+// import saga from "./saga";
 import { setNotifConfigAction } from "./actions";
 import makeSelectNotifications from "./selectors";
 
-import { useInjectSaga } from "../../utils/injectSaga";
+// import { useInjectSaga } from "../../utils/injectSaga";
 import {
   ContainerState,
   ContainerActions,
@@ -30,22 +26,22 @@ interface Props extends ContainerActions {
   notification: ContainerState;
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    width: "100%",
-    "& > * + *": {
-      marginTop: theme.spacing(2)
-    }
-  }
-}));
+// const useStyles = makeStyles((theme: Theme) => ({
+//   root: {
+//     width: "100%",
+//     "& > * + *": {
+//       marginTop: theme.spacing(2)
+//     }
+//   }
+// }));
 
 function Alert(props: AlertProps) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
 const Notifications: React.FC<Props> = props => {
-  useInjectSaga({ key: "default", saga: saga });
-  const classes = useStyles();
+  // useInjectSaga({ key: "default", saga: saga });
+  // const classes = useStyles();
   const { config } = props.notification;
 
   //# this was converted to a Global Notification / Use this for debugging Only. #
@@ -69,10 +65,8 @@ const Notifications: React.FC<Props> = props => {
       message: "",
       duration: 1000
     });
-    console.log("Todo: Global method to close this notification.");
   };
 
-  console.log("config.duration", config.duration);
   return (
     <div>
       {/* <Snackbar
