@@ -28,15 +28,16 @@ export function* addUser(args: any) {
     const json = getItem(ACCESS_TOKEN_KEY);
     const { token } = json !== null ? JSON.parse(json) : "";
 
-    const req = yield call(request, `${REACT_APP_API_BASE_URL}/api/register`, {
+    yield call(request, `${REACT_APP_API_BASE_URL}/api/register`, {
       method: "POST",
       body: JSON.stringify(payload),
       token
     });
 
-    const { user } = req;
     yield put(setNotifConfigAction(saving));
-    yield put(push(`/users/form/${user.id}`));
+
+    yield put(push(`/login`));
+
     yield put(setLoadingAppAction(false));
   } catch (error) {
     yield put(setLoadingAppAction(false));

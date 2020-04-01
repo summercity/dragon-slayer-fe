@@ -9,6 +9,7 @@ import { ContainerState as LoginState } from "containers/DefaultContainer/types"
 import { ContainerState as NotifState } from "../containers/Notifications/types";
 import { ContainerState as UsersState } from "../containers/Users/types";
 import { ContainerState as QueueState } from "../containers/Queue/types";
+import { ContainerState as ArenaState } from "../containers/Arena/types";
 
 // From template
 // export interface InjectedStore extends Store {
@@ -48,6 +49,7 @@ export interface ApplicationRootState {
   readonly notification: NotifState;
   readonly users: UsersState;
   readonly queue: QueueState;
+  readonly arena: ArenaState;
   // readonly language: LanguageProviderState;
   // readonly testContainer: TestContainerState;
   // for testing purposes

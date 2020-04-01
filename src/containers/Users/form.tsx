@@ -7,9 +7,6 @@ import { createStructuredSelector } from "reselect";
 import { compose, Dispatch } from "redux";
 
 import TextField from "@material-ui/core/TextField";
-import FormGroup from "@material-ui/core/FormGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
@@ -75,11 +72,7 @@ const UserForm: React.FC<Props> = props => {
   const handleChangeInput = (name: string) => (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    if (name === "active") {
-      setState({ ...state, ["active"]: event.target.checked }); // eslint-disable-line
-    } else {
-      setState({ ...state, [name]: event.target.value });
-    }
+    setState({ ...state, [name]: event.target.value });
   };
 
   const { register, handleSubmit, errors, watch } = useForm();
@@ -90,8 +83,6 @@ const UserForm: React.FC<Props> = props => {
       payload.id = userId;
       updateUser(payload);
     } else {
-      payload.status_description = "Available";
-      payload.online = 1;
       addUser(payload);
     }
   };
@@ -105,21 +96,17 @@ const UserForm: React.FC<Props> = props => {
     props.history.push("/");
   };
 
-  // const handleClickNewForm = () => {
-  //   props.history.push("/users/form");
-  // };
-
-  //# Check optimization #
-  // useEffect(() => console.log("rendered!"));
-
   return (
     <div>
-      <Helmet titleTemplate="Q-APP" defaultTitle="Q-APP- User Form">
-        <meta name="description" content="A React.js Boilerplate Application" />
+      <Helmet
+        titleTemplate="DRAGON SLAYER"
+        defaultTitle="DRAGON SLAYER- User Form"
+      >
+        <meta name="description" content="by Jan Dave Arce" />
       </Helmet>
       <Paper className={classes.paper}>
         <h3 style={{ marginLeft: 10 }}>
-          {userId ? "Update User" : "Add User"}
+          {userId ? "Profile" : "Registration"}
         </h3>
         <form className={classes.root} onSubmit={handleSubmit(onSubmit)}>
           <div>
@@ -132,7 +119,7 @@ const UserForm: React.FC<Props> = props => {
               error={hasError("name")}
               helperText={hasError("name") && "Name is required"}
               onChange={handleChangeInput("name")}
-              value={state.name}
+              // value={state.name}
             />
             <TextField
               id="email"
@@ -149,28 +136,7 @@ const UserForm: React.FC<Props> = props => {
               error={hasError("email")}
               helperText={hasError("email") && "Invalid email address"}
               onChange={handleChangeInput("email")}
-              value={state.email}
-            />
-          </div>
-          <div>
-            <TextField
-              id="computer_number"
-              name="computer_number"
-              inputRef={register({
-                required: true,
-                pattern: {
-                  value: /^[0-9]*$/i,
-                  message: "Please enter a number only."
-                }
-              })}
-              label="Computer number"
-              variant="outlined"
-              error={hasError("computer_number")}
-              helperText={
-                hasError("computer_number") && "Please enter a number only."
-              }
-              onChange={handleChangeInput("computer_number")}
-              value={state.computer_number}
+              // value={state.email}
             />
           </div>
           <div>
@@ -184,7 +150,7 @@ const UserForm: React.FC<Props> = props => {
               helperText={hasError("password") && "Password is required"}
               type="password"
               onChange={handleChangeInput("password")}
-              value={state.password}
+              // value={state.password}
             />
             <TextField
               id="password_confirmation"
@@ -204,25 +170,8 @@ const UserForm: React.FC<Props> = props => {
               }
               type="password"
               onChange={handleChangeInput("password_confirmation")}
-              value={state.password_confirmation}
+              // value={state.password_confirmation}
             />
-          </div>
-          <div style={{ marginLeft: 10 }}>
-            <FormGroup row>
-              <FormControlLabel
-                control={
-                  <Switch
-                    name="active"
-                    checked={Boolean(Number(state.active))}
-                    onChange={handleChangeInput("active")}
-                    value={Boolean(Number(state.active))}
-                    color="primary"
-                    inputRef={register()}
-                  />
-                }
-                label={state.active ? "Active" : "Inactive"}
-              />
-            </FormGroup>
           </div>
           <div>
             <Button
@@ -233,15 +182,18 @@ const UserForm: React.FC<Props> = props => {
             >
               {!userId ? "Submit" : "Save Changes"}
             </Button>
-
-            <Button
-              className={classes.button}
-              color="default"
-              variant="contained"
-              onClick={back}
-            >
-              Back
-            </Button>
+            {userId ? (
+              <Button
+                className={classes.button}
+                color="default"
+                variant="contained"
+                onClick={back}
+              >
+                Login
+              </Button>
+            ) : (
+              ""
+            )}
           </div>
         </form>
       </Paper>

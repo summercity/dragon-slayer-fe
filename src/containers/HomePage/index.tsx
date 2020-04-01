@@ -6,8 +6,7 @@ import Paper from "@material-ui/core/Paper";
 import { compose, Dispatch } from "redux";
 import { makeStyles } from "@material-ui/core/styles";
 
-import Queue from "../Queue/Loadable";
-import StatusLegend from "../../components/StatusLegend";
+import Arena from "../Arena/Loadable";
 import { changeFullname } from "./actions";
 import makeSelectHomePageContainer from "./selectors";
 
@@ -48,9 +47,8 @@ const HomePage: React.FC<Props> = props => {
       <Helmet titleTemplate="Q-APP" defaultTitle="Q-APP">
         <meta name="description" content="Q-APP" />
       </Helmet>
-      <StatusLegend />
       <Paper className={classes.paper}>
-        <Queue />
+        <Arena />
       </Paper>
     </div>
   );

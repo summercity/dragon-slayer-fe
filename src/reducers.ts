@@ -13,6 +13,7 @@ import loginReducer from "./containers/Login/reducer";
 import notiftReducer from "./containers/Notifications/reducer";
 import usersReducer from "./containers/Users/reducer";
 import queueReducer from "./containers/Queue/reducer";
+import arenaReducer from "./containers/Arena/reducer";
 
 // import languageProviderReducer from "containers/LanguageProvider/reducer";
 
@@ -28,6 +29,7 @@ export default function createReducer(injectedReducers = {}) {
     notification: notiftReducer,
     users: usersReducer,
     queue: queueReducer,
+    arena: arenaReducer,
     // language: languageProviderReducer,
     router: connectRouter(history),
     ...injectedReducers

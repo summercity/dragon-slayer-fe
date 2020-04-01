@@ -1,0 +1,17 @@
+.DefaultContainer {
+  text-align: center;
+}
+
+.hero {
+  max-width: 256px;
+}
+
+.dragon {
+  margin-left: -100px;
+  max-width: 256px;
+}
+
+.skill {
+  width: 150px;
+  margin: 10px;
+}

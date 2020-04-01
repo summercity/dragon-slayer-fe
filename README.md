@@ -1,5 +1,11 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+Dragon Slayer
+APP DEMO:
+
+1. https://screencast-o-matic.com/watch/cYfVqa4znH
+2. https://screencast-o-matic.com/watch/cYfVqp4ziD
+
 ## Available Scripts
 
 In the project directory, you can run:

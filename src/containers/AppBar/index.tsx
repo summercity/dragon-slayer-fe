@@ -70,7 +70,7 @@ function ButtonAppBar(props: ToLocalProps) {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>
-              Q-APP
+              DRAGON SLAYER
             </Typography>
             <Avatar
               fullName={access.user.name}

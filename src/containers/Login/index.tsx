@@ -69,7 +69,7 @@ const useStyles = makeStyles(theme => ({
     margin: 10
   },
   title: {
-    maxWidth: 70,
+    maxWidth: 200,
     margin: "0 auto",
     fontWeight: 700,
     fontSize: 18,
@@ -115,18 +115,22 @@ const Login: React.FC<Props> = props => {
     props.submitLogin(payload);
   };
 
+  const handleClickSignUp = () => {
+    props.history.push("/users/form");
+  };
+
   return (
     <div className="Login">
       <Helmet
         titleTemplate="%s - React.js Boilerplate"
-        defaultTitle="React.js Boilerplate by Jan Dave Arce"
+        defaultTitle="Dragon Slayer - JDA"
       >
-        <meta name="description" content="A React.js Boilerplate Application" />
+        <meta name="description" content="React boilerplate by Jan Dave arce" />
       </Helmet>
       <div className={classes.root}>
         {props.loading ? <LinearProgress /> : ""}
         <Paper className={classes.paper}>
-          <div className={classes.title}>Q-APP</div>
+          <div className={classes.title}>Dragon Slayer</div>
           <form noValidate autoComplete="off">
             <FormControl
               className={clsx(classes.margin, classes.textField)}
@@ -176,6 +180,14 @@ const Login: React.FC<Props> = props => {
               onClick={handleClickSubmitLogin}
             >
               Login
+            </Button>
+            <Button
+              className={classes.button}
+              variant="contained"
+              color="secondary"
+              onClick={handleClickSignUp}
+            >
+              Sign Up
             </Button>
           </form>
         </Paper>
