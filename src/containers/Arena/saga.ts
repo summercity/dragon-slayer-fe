@@ -12,7 +12,7 @@ import { setNotifConfigAction } from "../Notifications/actions";
 
 import { selectNotif } from "../App/selectors";
 // import request from "../../utils/request";
-import { getItem } from "../../utils/localStorage";
+import { getItem, setItem } from "../../utils/localStorage";
 
 // import {
 //   REACT_APP_API_BASE_URL,
@@ -51,6 +51,9 @@ export function* castSkillPlayer(args: any) {
     // Set default
     yield put(setPlayerAction(action));
 
+    const jComment = getItem("commentary");
+    const commentary = jComment !== null ? JSON.parse(jComment) : [];
+
     // ### Cast skill base on action ###
     if (payload.skill === "attack") {
       action.skill = payload.skill;
@@ -62,7 +65,20 @@ export function* castSkillPlayer(args: any) {
         ...dragonState,
         hp: dragonState.hp - payload.damage
       };
+
+      // Add Commentary
+
       yield put(setDragonAction(dragon));
+
+      // Commentary
+      const newAttackComment = {
+        player: "Knight",
+        action: `Attacked ${payload.damage}`
+      };
+      commentary.push(newAttackComment);
+      setItem("commentary", JSON.stringify(commentary));
+      // ---
+
       // attack end
     } else if (payload.skill === "heal") {
       action.skill = payload.skill;
@@ -78,6 +94,15 @@ export function* castSkillPlayer(args: any) {
       yield sleep(1000); // MOCK API CALL RESPONSE TIME
       action.hp = totalHp;
       yield put(setPlayerAction(action));
+
+      // Commentary
+      const newHealComment = {
+        player: "Knight",
+        action: `Healed ${heal}`
+      };
+      commentary.push(newHealComment);
+      setItem("commentary", JSON.stringify(commentary));
+      // ---
     }
 
     // set to initial action
@@ -99,6 +124,9 @@ export function* castSkillDragon(args: any) {
     makeSelectArena()
   );
 
+  const jComment = getItem("commentary");
+  const commentary = jComment !== null ? JSON.parse(jComment) : [];
+
   const { offline } = yield select(selectNotif());
 
   try {
@@ -113,6 +141,15 @@ export function* castSkillDragon(args: any) {
 
       // MOCKING API CALL FOR NOW
       // yield sleep(1000); // MOCK API CALL RESPONSE TIME
+
+      // Commentary
+      const newAttackComment = {
+        player: "Dragon",
+        action: `Attacked ${payload.damage}`
+      };
+      commentary.push(newAttackComment);
+      setItem("commentary", JSON.stringify(commentary));
+      // ---
 
       yield put(setPlayerAction(player));
     }

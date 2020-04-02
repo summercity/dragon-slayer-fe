@@ -3,6 +3,13 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 Dragon Slayer
 APP DEMO:
 
+New Demo:
+
+1. https://screencast-o-matic.com/watch/cYfnhJ4gFK
+2. https://screencast-o-matic.com/watch/cYfnhP4gYq
+
+Old Demo
+
 1. https://screencast-o-matic.com/watch/cYfVqa4znH
 2. https://screencast-o-matic.com/watch/cYfVqp4ziD
 
