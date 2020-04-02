@@ -1,10 +1,11 @@
-import React, { memo } from "react";
+import React from "react";
 
 import HP from "@material-ui/core/Badge";
 import { PlayerIterface, DragonIterface } from "../../containers/Arena/types";
 
 import knight from "./img/knight.gif";
 import knightAttack from "./img/knight-attack.gif";
+import knightHeal from "./img/knight-heal.gif";
 import dragon from "./img/dragon.gif";
 
 interface Props {
@@ -15,9 +16,10 @@ interface Props {
 }
 
 const Hero: React.FC<Props> = props => {
+  const { player } = props;
   return (
     <React.Fragment>
-      {props.player.hp && props.player.hp >= 0 && props.hero === "knight" ? (
+      {player.hp && player.hp >= 0 && props.hero === "knight" ? (
         <HP
           badgeContent={props.player.hp}
           color="primary"
@@ -26,13 +28,19 @@ const Hero: React.FC<Props> = props => {
             horizontal: props.horizontal
           }}
         >
-          {props.player.skill === "stop" || props.player.skill === "heal" ? (
-            <img src={knight} alt="Dragon" className="hero" />
+          {player.skill === "stop" ? (
+            <img src={knight} alt="Knight" className="hero" />
           ) : (
             ""
           )}
-          {props.player.skill === "attack" ? (
-            <img src={knightAttack} alt="Dragon" className="hero" />
+
+          {player.skill === "attack" ? (
+            <img src={knightAttack} alt="Knight" className="hero" />
+          ) : (
+            ""
+          )}
+          {player.skill === "heal" ? (
+            <img src={knightHeal} alt="Knight" className="hero180" />
           ) : (
             ""
           )}
@@ -58,4 +66,4 @@ const Hero: React.FC<Props> = props => {
   );
 };
 
-export default memo(Hero);
+export default Hero;

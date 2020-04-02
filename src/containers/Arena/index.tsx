@@ -10,13 +10,13 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 // import messages from "./messages";
 
 import Hero from "../../components/Hero";
-
 import saga from "./saga";
 import { castSkillPlayerAction, castSkillDragonAction } from "./actions";
 import makeSelectArena from "./selectors";
 import { PlayerIterface, DragonIterface } from "./types";
 
 import { useInjectSaga } from "../../utils/injectSaga";
+import { setItem } from "../../utils/localStorage";
 import {
   ContainerState,
   ContainerActions,
@@ -36,41 +36,46 @@ const Arena: React.FC<Props> = props => {
   const { player, dragon } = props.arena;
 
   const handleClickAttack = () => {
-    const damage = Math.floor(Math.random() * 10) + 1;
-    const payload = {
-      ...player,
-      casting: true,
-      skill: "attack", // attack, blast, heal, give, up
-      damage
-    };
-    props.castSkillPlayer(payload);
+    if (!player.casting) {
+      const damage = Math.floor(Math.random() * 10) + 1;
+      const payload = {
+        skill: "attack", // attack, blast, heal, give, up
+        damage
+      };
+      props.castSkillPlayer(payload);
+    }
   };
 
   const handleClickHeal = () => {
-    const heal = Math.floor(Math.random() * 10);
-    const payload = {
-      ...player,
-      casting: true,
-      skill: "heal", // attack, blast, heal, give, up
-      hp: player.hp && player.hp + heal,
-      damage: 0
-    };
-    props.castSkillPlayer(payload);
+    if (!player.casting) {
+      const payload = {
+        ...player,
+        skill: "heal" // attack, blast, heal, give, up
+      };
+      props.castSkillPlayer(payload);
+    }
   };
 
   useEffect(() => {
-    setInterval(function() {
+    const matchId = setInterval(function() {
       const damage = Math.floor(Math.random() * 10) + 1;
       const payload = {
-        ...dragon,
-        casting: true,
-        skill: "attack", // attack, blast, heal, give, up
+        skill: "attack", // attack
         damage
       };
 
       castSkillDragon(payload);
+      // Match Checker Console
+      // console.log("Match is still active");
     }, 5000);
-  }, [dragon, castSkillDragon]);
+
+    const match = {
+      matchId
+    };
+    // this will stop the match  if it is completed...
+    // to check/debug please enable console Match Checker above
+    setItem("match", JSON.stringify(match));
+  }, [castSkillDragon]);
 
   return (
     <div className="Arena">
@@ -111,6 +116,12 @@ const Arena: React.FC<Props> = props => {
             {player.casting && <CircularProgress />}
             Heal
           </Button>
+
+          <a href="/" style={{ textDecoration: "none" }}>
+            <Button className="skill" variant="contained">
+              Give Up
+            </Button>
+          </a>
         </div>
       )}
     </div>

@@ -12,7 +12,7 @@ import { setNotifConfigAction } from "../Notifications/actions";
 
 import { selectNotif } from "../App/selectors";
 // import request from "../../utils/request";
-// import { getItem } from "../../utils/localStorage";
+import { getItem } from "../../utils/localStorage";
 
 // import {
 //   REACT_APP_API_BASE_URL,
@@ -39,22 +39,51 @@ export function* castSkillPlayer(args: any) {
     //   token
     // });
 
-    const player = {
-      ...payload,
-      casting: false,
-      skill: "stop",
-      hp: playerState.hp
+    // Heal / random 1-10
+    const heal = Math.floor(Math.random() * 10);
+
+    // Default state action
+    const action = {
+      ...playerState,
+      skill: "stop"
     };
 
-    const dragon = {
-      ...dragonState,
-      hp: dragonState.hp - payload.damage
-    };
+    // Set default
+    yield put(setPlayerAction(action));
 
-    // MOCKING API CALL FOR NOW
-    yield sleep(500); // MOCK API CALL RESPONSE TIME
-    yield put(setPlayerAction(player));
-    yield put(setDragonAction(dragon));
+    // ### Cast skill base on action ###
+    if (payload.skill === "attack") {
+      action.skill = payload.skill;
+      action.casting = true;
+      // attack dragon
+      // MOCKING API CALL FOR NOW
+      yield sleep(1000); // MOCK API CALL RESPONSE TIME
+      const dragon = {
+        ...dragonState,
+        hp: dragonState.hp - payload.damage
+      };
+      yield put(setDragonAction(dragon));
+      // attack end
+    } else if (payload.skill === "heal") {
+      action.skill = payload.skill;
+      action.casting = true;
+      let totalHp = action.hp + heal;
+
+      // Max HP to 50
+      if (totalHp > 50) {
+        totalHp = 50;
+      }
+      // attack dragon
+      // MOCKING API CALL FOR NOW
+      yield sleep(1000); // MOCK API CALL RESPONSE TIME
+      action.hp = totalHp;
+      yield put(setPlayerAction(action));
+    }
+
+    // set to initial action
+    action.skill = "stop";
+    action.casting = false;
+    yield put(setPlayerAction(action));
     yield put(setLoadingAppAction(false));
   } catch (error) {
     yield put(setLoadingAppAction(false));
@@ -73,14 +102,10 @@ export function* castSkillDragon(args: any) {
   const { offline } = yield select(selectNotif());
 
   try {
-    if (dragonState.hp && dragonState.hp > 0) {
-      const dragon = {
-        ...payload,
-        casting: false,
-        skill: "stop",
-        hp: dragonState.hp
-      };
+    const j = getItem("match");
+    const match = j !== null ? JSON.parse(j) : {};
 
+    if (dragonState.hp && dragonState.hp > 0) {
       const player = {
         ...playerState,
         hp: playerState.hp - payload.damage
@@ -88,8 +113,12 @@ export function* castSkillDragon(args: any) {
 
       // MOCKING API CALL FOR NOW
       // yield sleep(1000); // MOCK API CALL RESPONSE TIME
-      yield put(setDragonAction(dragon));
+
       yield put(setPlayerAction(player));
+    }
+
+    if (Math.sign(playerState.hp) === -1 || Math.sign(dragonState.hp) === -1) {
+      clearInterval(match.matchId);
     }
 
     yield put(setLoadingAppAction(false));

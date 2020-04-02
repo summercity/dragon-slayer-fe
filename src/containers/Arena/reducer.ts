@@ -23,10 +23,10 @@ function arenaReducer(
   action: ContainerActionsAndTypes
 ): ContainerState {
   switch (action.type) {
-    case ActionTypes.CAST_PLAYER_SKILL:
-      return Object.assign({}, state, {
-        player: action.payload
-      });
+    // case ActionTypes.CAST_PLAYER_SKILL:
+    //   return Object.assign({}, state, {
+    //     player: action.payload
+    //   });
     case ActionTypes.SET_PLAYER_ACTION:
       return Object.assign({}, state, {
         player: action.payload
